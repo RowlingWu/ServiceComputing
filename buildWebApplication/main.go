@@ -6,5 +6,5 @@ import (
 
 func main() {
 	server := service.NewServer()
-	server.Run(":8080")
+	server.Run(":9090")
 }

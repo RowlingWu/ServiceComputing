@@ -73,6 +73,7 @@ func (manager *Manager) GC() {
 	defer manager.lock.Unlock()
 	manager.provider.SessionGC(manager.maxLifeTime)
 	log.Println("sessionGC\n")
+	manager.Print()
 	time.AfterFunc(time.Duration(manager.maxLifeTime*(int64)(time.Second)), func() { manager.GC() }) // 利用time包的定时器功能
 }
 

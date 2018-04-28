@@ -43,6 +43,16 @@ func initRoutes(mx *mux.Router) {
 	mx.HandleFunc("/", homeHandler)
 	mx.HandleFunc("/count", count)
 	mx.HandleFunc("/logout", logout)
+
+	webroot := os.Getenv("WEBROOT")
+	if len(webroot) == 0 {
+		if root, err := os.Getwd(); err != nil {
+			panic("could not retrieve working directory!")
+		} else {
+			webroot = root
+		}
+	}
+	mx.PathPrefix("/static").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir(webroot+"/assets/"))))
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
